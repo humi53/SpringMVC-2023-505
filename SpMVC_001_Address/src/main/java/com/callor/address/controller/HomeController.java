@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.callor.address.dao.AddrDao;
 import com.callor.address.models.AddrDto;
+import com.callor.address.service.Addrservice;
 
 /*
  * Controller class
@@ -23,13 +24,16 @@ import com.callor.address.models.AddrDto;
 @Controller
 public class HomeController {	
 
-	@Autowired
-	protected AddrDao addrDao;
+	protected final Addrservice addrservice;
 	
+	public HomeController(Addrservice addrservice) {
+		this.addrservice = addrservice;
+	}
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		List<AddrDto> addrList = addrDao.selectAll();
+		List<AddrDto> addrList = addrservice.selectAll();
 		model.addAttribute("ADDRS",addrList);
 		return "home";
 	}
@@ -37,7 +41,7 @@ public class HomeController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseBody
 	public List<AddrDto> list(){
-		List<AddrDto> addrList = addrDao.selectAll();
+		List<AddrDto> addrList = addrservice.selectAll();
 		return addrList;
 	}
 	
@@ -68,12 +72,16 @@ public class HomeController {
 	 * Controller 의 method 에 @ResponseBody Annotation 이 부착되면
 	 * 문자열을 그대로(direct) Client 로 Response 하라 라는 의미 
 	 */
-	@ResponseBody
+//	@ResponseBody
 	public String insert(@ModelAttribute AddrDto addrDto) {
-		return String.format("이름: %s, 전화번호 : %s, 주소: %s", 
-				addrDto.getA_name(),
-				addrDto.getA_tel(),
-				addrDto.getA_addr());
+		
+		addrservice.insert(addrDto);
+		return "redirect:/";
+		
+//		return String.format("이름: %s, 전화번호 : %s, 주소: %s", 
+//				addrDto.getA_name(),
+//				addrDto.getA_tel(),
+//				addrDto.getA_addr());
 	}
 	/*
 	public String insert(String a_id, String a_name, String a_tel, String a_addr) {
@@ -90,16 +98,24 @@ public class HomeController {
 	@RequestMapping(value = "/id_check", method = RequestMethod.GET)
 	@ResponseBody
 	public String idCheck(String id) {
-		AddrDto addrDto = addrDao.findById(id);
-		if(addrDto == null) {
-			return "OK";
-//		}else if(addrDto.getA_id().equals(id)) {
+//		AddrDto addrDto = addrservice.findById(id);
+//		if(addrDto == null) {
+//			return "OK";
+////		}else if(addrDto.getA_id().equals(id)) {
+////			return "FAIL";
+//		}else {
 //			return "FAIL";
-		}else {
-			return "FAIL";
-		}
-	}
+//		}
+		return addrservice.idCheck(id);
+	}           
 	
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail(String id, Model model) {
+		AddrDto addrDto = addrservice.findById(id);
+		model.addAttribute("ADDR", addrDto);
+		model.addAttribute("BODY","DETAIL");
+		return "home";
+	}
 	
 	
 }
