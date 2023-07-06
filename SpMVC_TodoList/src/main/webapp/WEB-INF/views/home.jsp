@@ -14,6 +14,30 @@
 	<div>
 		<h1>TO DO List 2023</h1>
 	</div>
+	<div>
+		<input class="" type="text" placeholder="작성일자">
+		<input class="" type="text" placeholder="작성시각">
+		<input class="" type="text" placeholder="할일">
+	</div>
+	<div>
+		<table class="main list">
+			<tr>
+				<th>No.</th>
+				<th>할일</th>
+				<th>완료여부</th>
+			</tr>
+			<tr data-id="">
+				<td>1</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr data-id="">
+				<td>2</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
 	
 </body>
 </html>
