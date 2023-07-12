@@ -21,6 +21,8 @@ const server = async () => {
 	const res = await fetch(URL).then();
 	// 서버의 응답(reponse)에서 text 겨로가만 추출하여 변수 result 에 저장하라
 	const result = await res.text()
+	if(result === "OK") ...
+	else ...
 }
 
 ```
