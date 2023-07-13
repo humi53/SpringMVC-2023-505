@@ -19,5 +19,8 @@
 		<div><label>이미지</label><input name="b_file" type="file" accept="image/*,audio/*,video/*"/></div>
 		<div class="button-box"><button>저장하기</button></div>
 	</form>
+	<div>
+		<img src="${rootPath }/files/${FILE_NAME}" width="100px"/>
+	</div>
 </body>
 </html>
