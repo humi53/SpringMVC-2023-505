@@ -14,7 +14,6 @@ import com.callor.rent.service.BookService;
 public class BookServiceImplV1 implements BookService{
 	
 	protected final BookDao bookDao;
-
 	public BookServiceImplV1(BookDao bookDao) {
 		this.bookDao = bookDao;
 	}
@@ -29,7 +28,8 @@ public class BookServiceImplV1 implements BookService{
 	}
 
 	@Override
-	public List<BookDto> sellectAll() {
+	public List<BookDto> selectAll() {
+		// TODO Auto-generated method stub
 		return bookDao.selectAll();
 	}
 
@@ -45,8 +45,9 @@ public class BookServiceImplV1 implements BookService{
 
 	@Override
 	public int update(BookDto bookDto) {
+		// TODO Auto-generated method stub
 		return bookDao.update(bookDto);
 	}
 	
-	
+
 }

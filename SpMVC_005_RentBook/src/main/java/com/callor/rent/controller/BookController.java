@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "/book")
+@RequestMapping(value="/book")
 public class BookController {
 
 	protected final BookService bookService;
@@ -29,54 +28,55 @@ public class BookController {
 		this.bookService = bookService;
 	}
 
-
-	@RequestMapping(value = {"/",""}, method = RequestMethod.GET)
+	@RequestMapping(value= {"/",""} ,method=RequestMethod.GET)
 	public String home(Model model) {
-		List<BookDto> books = bookService.sellectAll();
-		model.addAttribute("BOOKS", books);
+		List<BookDto> books = bookService.selectAll();
+		model.addAttribute("BOOKS",books);
 		return "book/home";
 	}
 	
 	// 도서정보 입력화면을 보여달라
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
-	public String input(@ModelAttribute("BOOK") BookDto bookDto) {
+	@RequestMapping(value="/insert",method=RequestMethod.GET)
+	public String insert(@ModelAttribute("BOOK") BookDto bookDto) {
 		return "book/input";
-	
 	}
 	
-	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insert(@ModelAttribute("BOOK") BookDto bookDto, Model model) {
+	@RequestMapping(value="/insert",method=RequestMethod.POST)
+	public String insert(@ModelAttribute("BOOK") BookDto bookDto,Model model) {
 		log.debug("전달된 데이터 {}", bookDto);
+		
 		int result = bookService.insert(bookDto);
 		return "redirect:/book";
 	}
 	
-	@RequestMapping(value = "/{bcode}/detail", method=RequestMethod.GET)
-	public String detail(@PathVariable("bcode") String bcode, Model model) {
+	@RequestMapping(value="/{b_code}/detail",method=RequestMethod.GET)
+	public String detail(@PathVariable("b_code") String bcode,Model model ) {
 		BookDto bookDto = bookService.findById(bcode);
-		model.addAttribute("BOOK", bookDto);
+		model.addAttribute("BOOK",bookDto);
 		return "book/detail";
 	}
-	
-	@RequestMapping(value = "/{bcode}/update", method=RequestMethod.GET)
-	public String update(@PathVariable("bcode") String bcode, Model model) {
+
+	@RequestMapping(value="/{b_code}/update",method=RequestMethod.GET)
+	public String update(@PathVariable("b_code") String bcode,Model model ) {
 		BookDto bookDto = bookService.findById(bcode);
-		model.addAttribute("BOOK", bookDto);
-		model.addAttribute("STATE", "UPDATE");
+		model.addAttribute("BOOK",bookDto);
+		model.addAttribute("STATE","UPDATE");
 		return "book/input";
 	}
-	
-	@RequestMapping(value = "/{bcode}/update", method=RequestMethod.POST)
+
+	@RequestMapping(value="/{b_code}/update",method=RequestMethod.POST)
 	public String update(
-			@PathVariable("bcode") String bcode,
+			@PathVariable("b_code") String bcode,
 			@ModelAttribute("BOOK") BookDto bookDto,
-			Model model) {
+			Model model ) {
 		
 		if(!bcode.isBlank()) bookDto.setB_code(bcode);
 		int result = bookService.update(bookDto);
-		
-		return String.format("redirect:/book/%s/detail", bcode);		
+		return String.format("redirect:/book/%s/detail", bcode);
+	
 	}
+
+	
 	
 	/*
 	 * @ModelAttribute("BOOK") 이라는 선언이 있는 매개변수가 발견되거든
@@ -87,4 +87,11 @@ public class BookController {
 	public BookDto newBookDto() {
 		return BookDto.builder().build();
 	}
+	
+	
 }
+
+
+
+
+
