@@ -1,4 +1,7 @@
 USE rentbookdb;
+use footprintdb;
+CREATE DATABASE imageDB;
+select * from tb_snsPost;
 
 -- 전체 데이터 중에서 5페이지에서 10개를 보고 싶다
 -- 전체 데이터 중에서 1페이지에서 10개 : 0 ~ 9번까지 보여주기
@@ -15,3 +18,8 @@ USE rentbookdb;
 SELECT * FROM tbl_books
 ORDER BY B_CODE
 LIMIT 10 OFFSET 1;
+
+
+SELECT COUNT(*)
+FROM tbl_books
+WHERE b_name LIKE CONCAT('%','부자','%');
