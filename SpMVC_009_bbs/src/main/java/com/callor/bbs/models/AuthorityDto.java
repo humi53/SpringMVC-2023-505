@@ -16,29 +16,20 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 
 @Entity
-@Table(name="tbl_users",schema = "jpaDB")
-public class UserDto {
+@Table(name="tbl_auths", schema = "jpaDB")
+public class AuthorityDto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
+	private long seq;
 	@Column(name = "username", columnDefinition = "VARCHAR(20)")
 	private String username;
+	private String authority;
 	
-	@Column(name = "password", columnDefinition = "VARCHAR(125)")
-	private String password;
-	
-	@Column(name = "email", columnDefinition = "VARCHAR(125)")
-	private String email;
-	private String nickname;
-	
-	@Column(nullable = true)
-	private int age;
 }
